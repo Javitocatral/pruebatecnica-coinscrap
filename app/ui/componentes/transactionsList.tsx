@@ -19,7 +19,6 @@ export default function TransactionsList({ initialTransactions }: Props) {
     return ['all', ...unique]
   }, [initialTransactions])
 
-  // filtrado y orden
   const filteredAndSorted = useMemo(() => {
     let data = [...initialTransactions]
 
@@ -53,6 +52,7 @@ export default function TransactionsList({ initialTransactions }: Props) {
       <div className="flex flex-wrap gap-4 items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-purple-100 mb-6">
         <input
           type="text"
+          aria-label="Buscar transacciones"
           placeholder="🔍 Buscar..."
           className="flex-1 min-w-[180px] border border-purple-200 rounded-lg p-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={search}
@@ -60,6 +60,7 @@ export default function TransactionsList({ initialTransactions }: Props) {
         />
 
         <select
+          aria-label="Filtrar por categoría"
           className="border border-purple-200 rounded-lg p-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -78,6 +79,7 @@ export default function TransactionsList({ initialTransactions }: Props) {
           <div className="flex bg-purple-100 rounded-lg p-1">
             <button
               onClick={() => setSortBy('date')}
+              aria-label="Ordenar por fecha"
               className={`px-3 py-1.5 text-sm rounded-md transition-all ${
                 sortBy === 'date'
                   ? 'bg-purple-600 text-white shadow'
@@ -88,6 +90,7 @@ export default function TransactionsList({ initialTransactions }: Props) {
             </button>
             <button
               onClick={() => setSortBy('amount')}
+              aria-label="Ordenar por importe"
               className={`px-3 py-1.5 text-sm rounded-md transition-all ${
                 sortBy === 'amount'
                   ? 'bg-green-500 text-white shadow'
@@ -101,9 +104,13 @@ export default function TransactionsList({ initialTransactions }: Props) {
       </div>
 
       {/* Lista */}
-      <ul className="divide-y divide-purple-100 bg-white rounded-xl shadow border border-purple-100">
+      <ul
+        role="list"
+        className="divide-y divide-purple-100 bg-white rounded-xl shadow border border-purple-100"
+      >
         {filteredAndSorted.map((t) => (
           <li
+            role="listitem"
             key={t.id}
             className="p-4 flex justify-between items-center hover:bg-purple-50 transition-all"
           >
